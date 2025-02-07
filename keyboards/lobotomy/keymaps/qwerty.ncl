@@ -128,9 +128,9 @@ let thumb = fun thumb_idx =>
     key_interrupts = std.array.replicate key_count ki.hr,
   } in
   [
-    kc.QUOT & lt 1 & hold.reg.behavior thumb_behavior,
-    kc.SPC  & lt 2 & hold.reg.behavior thumb_behavior,
-    kc.BSPC & lt 3 & hold.reg.behavior thumb_behavior,
+    kc.BSPC & lt 1 & hold.reg.behavior thumb_behavior,
+    kc.TAB  & lt 2 & hold.reg.behavior thumb_behavior,
+    kc.SPC & lt 3 & hold.reg.behavior thumb_behavior,
     kc.ENT  & lt 4 & hold.reg.behavior thumb_behavior,    
   ]
   |> std.array.at thumb_idx
