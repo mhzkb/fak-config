@@ -8,7 +8,7 @@ let { CH552T, .. } = import "fak/mcus.ncl" in
     rows = [34, 30, 16, 32, 14, 15],
   },
   usb_dev = {
-    vendor_id = 7170170, # mhzkb
+    vendor_id = 462, # mhzkb
     product_id = 0, # magnified
     product_ver = 256, # 0x0100
   },
