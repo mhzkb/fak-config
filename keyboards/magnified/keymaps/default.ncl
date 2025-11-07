@@ -23,7 +23,7 @@ let cu = {
 {
     layers = [
         [
-            kc.Q,    kc.W,    kc.E,    kc.R,    kc.T,    kc.ENT,    kc.BSPC,  kc.Y,   kc.U,    kc.I,    kc.O,    kc.P,
+            kc.Q,    kc.W,    kc.E,    kc.R,    kc.T,    cu.ENT_SYS,kc.BSPC,  kc.Y,   kc.U,    kc.I,    kc.O,    kc.P,
             cu.AGUI, cu.SALT, cu.DSFT, cu.FCTL, kc.G,               kc.TAB,   kc.H,   cu.JCTL, cu.KSFT, cu.LALT, kc.ESC,
             kc.Z,    kc.X,    kc.C,    kc.V,    kc.B,    kc.SPC,    kc.SPC,   kc.N,   kc.M,    kc.COMM, kc.DOT,  kc.SLSH,
         ],
