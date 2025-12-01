@@ -1,4 +1,4 @@
-let {tap, hold, combo, ..} = import "fak/keycode.ncl" in
+let {tap, hold, combo, macro, LT, ..} = import "fak/keycode.ncl" in
 
 let kc = tap.reg.kc in
 let md = hold.reg.mod in
@@ -9,10 +9,12 @@ let MO = hold.reg.layer in
 let cu = {
     AGUI = md.lgui & kc.A & hold.reg.behavior {},
     SALT = md.lalt & kc.S & hold.reg.behavior {},
-    DSFT = md.lsft & kc.D & hold.reg.behavior {},
+    #DSFT = md.lsft & kc.D & hold.reg.behavior {},
+    DSFT = LT {} 3 kc.D & hold.reg.mod.lsft,
     FCTL = md.lctl & kc.F & hold.reg.behavior {},
     JCTL = md.rctl & kc.J & hold.reg.behavior {},
-    KSFT = md.rsft & kc.K & hold.reg.behavior {},
+    #KSFT = md.rsft & kc.K & hold.reg.behavior {},
+    KSFT = LT {} 2 kc.K & hold.reg.mod.rsft,
     LALT = md.ralt & kc.L & hold.reg.behavior {},
     # Layer tap
     ENT_NUM = MO 1 & kc.ENT & hold.reg.behavior{},
@@ -20,8 +22,21 @@ let cu = {
     BOOT = tap.custom.fak.BOOT,
 } in
 
+# Adapted from https://github.com/bgkendall/
+# For modified layers (that emulate key overrides), cancel the modifier before pressing the key and
+# reinstate the modifier when done. (This can result in a stuck modifier in some cases, which is
+# why we have Reset on the Meta layer!)
+let LiftMod_Taps = fun modifier keys => macro.make (
+                                                    [ macro.release modifier ] @
+                                                    std.array.map (fun key => macro.press key) keys @
+                                                    [ macro.pause_for_release ] @
+                                                    std.array.map (fun key => macro.release key) keys @
+                                                    [ macro.press modifier ]
+                                                   ) in
+let LiftMod_Tap  = fun modifier key => LiftMod_Taps modifier [key] in
 
-
+let SpaceBack = LiftMod_Tap md.rsft kc.BSPC in
+let SpaceEnter = LiftMod_Tap md.lsft kc.ENT in
 
 let baseLayer = [
             kc.Q,    kc.W,    kc.E,    kc.R,    kc.T,    cu.ENT_NUM,kc.BSPC,  kc.Y,   kc.U,    kc.I,    kc.O,    kc.P,
@@ -39,7 +54,7 @@ let baseLayer = [
         ] in
 
 let numLayer = [
-            cu.BOOT, TTTT,    TTTT,    TTTT,    TTTT,    TTTT,      TTTT,     TTTT,   kc.N7,   kc.N8,   kc.N9,   TTTT,
+            TTTT, TTTT,    TTTT,    TTTT,    TTTT,    TTTT,      TTTT,     TTTT,   kc.N7,   kc.N8,   kc.N9,   TTTT,
             TTTT,    TTTT,    TTTT,    TTTT,    TTTT,               TTTT,     TTTT,   kc.N4,   kc.N5,   kc.N6,   kc.N0,
             TTTT,    TTTT,    TTTT,    TTTT,    TTTT,    TTTT,      TTTT,     TTTT,   kc.N1,   kc.N2,   kc.N3,   TTTT,
 
@@ -52,6 +67,32 @@ let numLayer = [
             TTTT,
         ] in
 
+let rShiftedBaseLayer  = [
+            TTTT, TTTT,    TTTT,    TTTT,    TTTT,    TTTT,      TTTT,     TTTT,   TTTT,   TTTT,   TTTT,   TTTT,
+            TTTT,    TTTT,    TTTT,    TTTT,    TTTT,               TTTT,     TTTT,   TTTT,   TTTT,   TTTT,   TTTT,
+            TTTT,    TTTT,    TTTT,    TTTT,    TTTT,    SpaceBack,      TTTT,     TTTT,   TTTT,   TTTT,   TTTT,   TTTT,
+
+            # Combos
+            TTTT,
+            TTTT,
+            TTTT,
+            TTTT,
+            TTTT,
+            TTTT,
+        ] in
+let lShiftedBaseLayer  = [
+            TTTT, TTTT,    TTTT,    TTTT,    TTTT,    TTTT,      TTTT,     TTTT,   TTTT,   TTTT,   TTTT,   TTTT,
+            TTTT,    TTTT,    TTTT,    TTTT,    TTTT,               TTTT,     TTTT,   TTTT,   TTTT,   TTTT,   TTTT,
+            TTTT,    TTTT,    TTTT,    TTTT,    TTTT,    SpaceEnter,      TTTT,     TTTT,   TTTT,   TTTT,   TTTT,   TTTT,
+
+            # Combos
+            TTTT,
+            TTTT,
+            TTTT,
+            TTTT,
+            TTTT,
+            TTTT,
+        ] in
 {
     virtual_keys = [
         combo.make 50 [0, 11],
@@ -64,5 +105,7 @@ let numLayer = [
     layers = [
         baseLayer,
         numLayer,
+        rShiftedBaseLayer,
+        lShiftedBaseLayer,
     ]
 }
