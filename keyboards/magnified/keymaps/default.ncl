@@ -1,4 +1,4 @@
-let {tap, hold, ..} = import "fak/keycode.ncl" in
+let {tap, hold, combo, ..} = import "fak/keycode.ncl" in
 
 let kc = tap.reg.kc in
 let md = hold.reg.mod in
@@ -15,22 +15,54 @@ let cu = {
     KSFT = md.rsft & kc.K & hold.reg.behavior {},
     LALT = md.ralt & kc.L & hold.reg.behavior {},
     # Layer tap
-    ENT_SYS = MO 1 & kc.ENT & hold.reg.behavior{},
+    ENT_NUM = MO 1 & kc.ENT & hold.reg.behavior{},
 
     BOOT = tap.custom.fak.BOOT,
 } in
 
-{
-    layers = [
-        [
-            kc.Q,    kc.W,    kc.E,    kc.R,    kc.T,    cu.ENT_SYS,kc.BSPC,  kc.Y,   kc.U,    kc.I,    kc.O,    kc.P,
+
+
+
+let baseLayer = [
+            kc.Q,    kc.W,    kc.E,    kc.R,    kc.T,    cu.ENT_NUM,kc.BSPC,  kc.Y,   kc.U,    kc.I,    kc.O,    kc.P,
             cu.AGUI, cu.SALT, cu.DSFT, cu.FCTL, kc.G,               kc.TAB,   kc.H,   cu.JCTL, cu.KSFT, cu.LALT, kc.ESC,
-            kc.Z,    kc.X,    kc.C,    kc.V,    kc.B,    kc.SPC,    kc.SPC,   kc.N,   kc.M,    kc.COMM, kc.DOT,  kc.SLSH,
-        ],
-        [
+            kc.Z,    kc.X,    kc.C,    kc.V,    kc.B,    kc.SPC,    kc.BSPC,   kc.N,   kc.M,    kc.COMM, kc.DOT,  kc.SLSH,
+
+            # Combos
+            cu.BOOT,
+            tap.custom.mouse.BTN1,
+            tap.custom.mouse.BTN2,
+            tap.custom.mouse.BTN3,
+            tap.custom.mouse.BTN4,
+            tap.custom.mouse.BTN5,
+
+        ] in
+
+let numLayer = [
             cu.BOOT, TTTT,    TTTT,    TTTT,    TTTT,    TTTT,      TTTT,     TTTT,   kc.N7,   kc.N8,   kc.N9,   TTTT,
             TTTT,    TTTT,    TTTT,    TTTT,    TTTT,               TTTT,     TTTT,   kc.N4,   kc.N5,   kc.N6,   kc.N0,
             TTTT,    TTTT,    TTTT,    TTTT,    TTTT,    TTTT,      TTTT,     TTTT,   kc.N1,   kc.N2,   kc.N3,   TTTT,
-        ]
+
+            # Combos
+            TTTT,
+            TTTT,
+            TTTT,
+            TTTT,
+            TTTT,
+            TTTT,
+        ] in
+
+{
+    virtual_keys = [
+        combo.make 50 [0, 11],
+        combo.make 50 [8, 9],
+        combo.make 50 [9, 10],
+        combo.make 50 [8, 9, 10],
+        combo.make 50 [8, 10],
+        combo.make 50 [8, 11],
+    ],
+    layers = [
+        baseLayer,
+        numLayer,
     ]
 }
