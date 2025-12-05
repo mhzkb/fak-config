@@ -1,4 +1,4 @@
-let { tap, hold, td, combo, macro, ..} = import "fak/keycode.ncl" in
+let { tap, hold, td, combo, macro, LT, ..} = import "fak/keycode.ncl" in
 let util = import "fak/util_functions.ncl" in
 
 let virtual_keys' = [
@@ -93,8 +93,8 @@ let make_hrm = fun key_idx =>
   } in
 
   let hrm_mods = [
-    mdh.lgui, mdh.lalt, mdh.lsft, mdh.lctl,
-    mdh.rctl, mdh.rsft, mdh.lalt, mdh.rgui,
+    mdh.lgui, mdh.lalt, LT {} 6 kc.D & mdh.lsft, mdh.lctl,
+    mdh.rctl, LT {} 5 kc.K & mdh.rsft, mdh.lalt, mdh.rgui,
   ] in
 
   let hrm_key_indices = [10, 11, 12, 13, 16, 17, 18, 19] in
@@ -147,6 +147,19 @@ let combos_base = [
   fak.BOOT,
 ] in
 
+# Key overrides
+let LiftMod_Taps = fun modifier keys => macro.make (
+                                                    [ macro.release modifier ] @
+                                                    std.array.map (fun key => macro.press key) keys @
+                                                    [ macro.pause_for_release ] @
+                                                    std.array.map (fun key => macro.release key) keys @
+                                                    [ macro.press modifier ]
+                                                   ) in
+let LiftMod_Tap  = fun modifier key => LiftMod_Taps modifier [key] in
+
+let SpaceBack = LiftMod_Tap md.rsft kc.BSPC in
+let SpaceEnter = LiftMod_Tap md.lsft kc.ENT in
+
 ### Keymap itself! ###
 {
   virtual_keys = virtual_keys',
@@ -186,6 +199,20 @@ let combos_base = [
       tt & ht, kc.F12,   kc.F11,  kc.F10,  tt & ht,   tt & ht, kc.F4,   kc.F5,   kc.F6,   tt & ht,
       tx & hx, kc.F9,    kc.F8,   kc.F7,   tx & hx,   tx & hx, kc.F1,   kc.F2,   kc.F3,   tx & hx,
                                   tt & ht, tt & ht,   tt & ht, tt & ht,
+    ] @ combos_base,
+    # Left-shifted
+    [
+      tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,   tt & ht, tt & ht,   tt & ht,   tt & ht,   tt & ht,
+      tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,   tt & ht, tt & ht,   tt & ht,   tt & ht,   tt & ht,
+      tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,   tt & ht, tt & ht,   tt & ht,   tt & ht,   tt & ht,
+                                 tt & ht, SpaceBack, tt & ht, tt & ht,
+    ] @ combos_base,
+    # Right-shifted
+    [
+      tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,   tt & ht, tt & ht,   tt & ht,   tt & ht,   tt & ht,
+      tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,   tt & ht, tt & ht,   tt & ht,   tt & ht,   tt & ht,
+      tt & ht, tt & ht, tt & ht, tt & ht, tt & ht,   tt & ht, tt & ht,   tt & ht,   tt & ht,   tt & ht,
+                                 tt & ht, tt & ht,   SpaceEnter, tt & ht,
     ] @ combos_base,
   ]
 }
