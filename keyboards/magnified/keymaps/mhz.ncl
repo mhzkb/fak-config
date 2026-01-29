@@ -52,6 +52,16 @@ let DRAG_SCROLL = macro.make [
     macro.tap kc.NUM,
     ] in
 
+let DOUBLE_CLICK = macro.make [
+    macro.press ms.BTN1,
+    macro.wait 20,
+    macro.release ms.BTN1,
+    macro.wait 50,
+    macro.press ms.BTN1,
+    macro.wait 20,
+    macro.release ms.BTN1,
+    ] in
+
 
 # Layer definitions
 
@@ -95,8 +105,8 @@ let nav_layer  = [
 
             # Combos
             TTTT,
-            TTTT,
-            TTTT,
+            DOUBLE_CLICK,
+            kc.TAB,
             TTTT,
             TTTT,
             TTTT,
@@ -111,8 +121,8 @@ let sym_layer  = [
 
             # Combos
             TTTT,
-            TTTT,
-            TTTT,
+            tap.custom.fak.CWTG,
+            kc.CAPS,
             TTTT,
             TTTT,
             TTTT,
