@@ -1,5 +1,6 @@
 let {tap, hold, combo, macro, LT, ..} = import "fak/keycode.ncl" in
 let dk = import "lib/danish.ncl" in
+let mc = import "lib/macros.ncl" in
 
 let kc = tap.reg.kc in
 let md = hold.reg.mod in
@@ -35,33 +36,6 @@ let cu = {
     LOCK = tap.reg.mod.lalt & tap.reg.mod.lctl & kc.L
 } in
 
-# Send Drag Scroll macro to trackball
-let DRAG_SCROLL_TG = macro.make [
-    macro.tap kc.NUM,
-    macro.wait 20,
-    macro.tap kc.NUM,
-    ] in
-
-let DRAG_SCROLL = macro.make [
-    macro.tap kc.NUM,
-    macro.wait 20,
-    macro.tap kc.NUM,
-    macro.pause_for_release,
-    macro.tap kc.NUM,
-    macro.wait 20,
-    macro.tap kc.NUM,
-    ] in
-
-let DOUBLE_CLICK = macro.make [
-    macro.press ms.BTN1,
-    macro.wait 20,
-    macro.release ms.BTN1,
-    macro.wait 50,
-    macro.press ms.BTN1,
-    macro.wait 20,
-    macro.release ms.BTN1,
-    ] in
-
 
 # Layer definitions
 
@@ -77,7 +51,7 @@ let base_layer = [
             ms.BTN3,
             ms.BTN4,
             ms.BTN5,
-            DRAG_SCROLL,
+            mc.DRAG_SCROLL,
             cu.LOCK,
 
         ] in
@@ -94,7 +68,7 @@ let num_layer = [
             TTTT,
             TTTT,
             TTTT,
-            DRAG_SCROLL_TG,
+            mc.DRAG_SCROLL_TG,
             TTTT,
         ] in
 
@@ -105,7 +79,7 @@ let nav_layer  = [
 
             # Combos
             TTTT,
-            DOUBLE_CLICK,
+            mc.DOUBLE_CLICK,
             kc.TAB,
             TTTT,
             TTTT,
