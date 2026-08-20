@@ -1,4 +1,5 @@
 let {tap, hold, combo, encoder, ..} = import "fak/keycode.ncl" in
+let dk = import "lib/danish.ncl" in
 let mc = import "lib/macros.ncl" in
 
 # Common aliases
@@ -20,7 +21,7 @@ let hrm = {
     RCTL = md.rctl & kc.J & hold.reg.behavior {},
     RSFT = md.rsft & kc.K & hold.reg.behavior {},
     RALT = md.ralt & kc.L & hold.reg.behavior {},
-    RGUI = md.rgui & kc.QUOT & hold.reg.behavior {},
+    RGUI = md.rgui & dk.QUOT & hold.reg.behavior {},
 } in
 
 
@@ -51,8 +52,8 @@ let base_layer = [
             kc.Z,     kc.X,     kc.C,     kc.V,     lts.SYM,     lts.NAV, kc.M,     kc.COMM,  kc.SPC,   lts.NUM,
 
             # Combos
-            kc.RIGHT,
-            kc.LEFT,
+            tap.reg.mod.lctl & dk.PLUS,
+            tap.reg.mod.lctl & dk.MINS,
             cu.BOOT,
 	        kc.BSPC,
 	        kc.TAB,
@@ -67,17 +68,17 @@ let base_layer = [
         ] in
 
 let num_layer = [
-            TTTT,  TTTT,  TTTT,  TTTT,  TTTT,    TTTT,  kc.N7,   kc.N8,   kc.N9,   TTTT,
-            TTTT,  TTTT,  TTTT,  TTTT,  TTTT,    TTTT,  kc.N4,   kc.N5,   kc.N6,   kc.N0,
-            TTTT,  TTTT,  TTTT,  TTTT,  TTTT,    TTTT,  kc.N1,   kc.N2,   kc.N3,   TTTT,
+            TTTT,  kc.N7,  kc.N8,  kc.N9,  TTTT,    TTTT,   kc.N7,   kc.N8,   kc.N9,   TTTT,
+            kc.N0, kc.N4,  kc.N5,  kc.N6,  kc.COMM, kc.DOT, kc.N4,   kc.N5,   kc.N6,   kc.N0,
+            TTTT,  kc.N1,  kc.N2,  kc.N3,  TTTT,    TTTT,   kc.N1,   kc.N2,   kc.N3,   TTTT,
 
             # Combos
             TTTT,
             TTTT,
             cu.RST,
-	        kc.DOT,
+	        kc.DEL,
 	        kc.ESC,
-            TTTT,
+            kc.COMM,
             TTTT,
             TTTT,
             TTTT,
