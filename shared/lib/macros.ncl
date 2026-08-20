@@ -30,4 +30,25 @@ DOUBLE_CLICK = macro.make [
     macro.release ms.BTN1,
     ],
 
+X_TG = macro.make [
+    macro.tap kc.SCRL,
+    macro.wait 20,
+    macro.tap kc.SCRL,
+    ],
+
+SNIPE_SCROLL_TG = macro.make [
+    macro.tap kc.CAPS,
+    macro.wait 20,
+    macro.tap kc.CAPS,
+    ],
+
+SNIPE_SCROLL = macro.make [
+    macro.tap kc.CAPS,
+    macro.wait 20,
+    macro.tap kc.CAPS,
+    macro.pause_for_release,
+    macro.tap kc.CAPS,
+    macro.wait 20,
+    macro.tap kc.CAPS,
+    ],
 }
