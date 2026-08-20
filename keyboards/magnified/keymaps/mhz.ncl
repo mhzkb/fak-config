@@ -63,8 +63,8 @@ let num_layer = [
 
             # Combos
             cu.RST,
-            TTTT,
-            TTTT,
+            mc.SNIPE_SCROLL_TG,
+            mc.X_TG,
             TTTT,
             TTTT,
             TTTT,
@@ -84,7 +84,7 @@ let nav_layer  = [
             TTTT,
             TTTT,
             TTTT,
-            TTTT,
+            mc.SNIPE_SCROLL,
             TTTT,
         ] in
 
